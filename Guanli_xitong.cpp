@@ -2,13 +2,19 @@
 using namespace std;
 #include"workerManager.h"
 
+#include"worker.h"      //添加抽象类头文件
+#include"employee.h"    //添加员工类文件
+#include"manager.h"		//添加经理类文件	
+#include"boss.h"		//添加老板类文件
+
 
 
 int main() {
 
 	//这个文件是主文件
 
-	//实例化管理者对象
+		//实例化管理者对象
+		
 	workerManager wm;
 
 	//调用展示菜单成员函数
@@ -23,6 +29,9 @@ int main() {
 	while (true)
 
 	{
+
+
+
 		//调用展示菜单成员函数 
 		wm.Show_Menu();
 
