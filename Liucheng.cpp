@@ -21,6 +21,8 @@ int main0() {
 	// 
 	//
 
+	//1.创建 workerManager 头文件和cpp文件
+	//2.
 
 
 	system("pause");

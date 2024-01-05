@@ -3,7 +3,6 @@
 using namespace std;
 
 
-
 class workerManager
 {
 public:
@@ -19,5 +18,5 @@ public:
 
 	//Îö¹¹º¯Êı
 	~workerManager();
-	
+
 };
