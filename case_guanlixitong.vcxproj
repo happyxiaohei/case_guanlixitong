@@ -127,7 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Process steps.cpp" />
+    <ClCompile Include="Guanli_xitong.cpp" />
+    <ClCompile Include="Liucheng.cpp" />
+    <ClCompile Include="workerManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="workerManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
