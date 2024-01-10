@@ -124,6 +124,9 @@ void workerManager::Add_Emp()  //添加职工
 
 			this->m_EmpNum = newSize;
 
+			//成功添加后,保存到文件中
+
+
 			//提示添加成功
 
 			cout << "成功添加" << addNum << "名新职工!" << endl;
