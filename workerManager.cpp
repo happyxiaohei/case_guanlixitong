@@ -7,10 +7,87 @@ using namespace std;
 
 workerManager::workerManager()
 {
-	//初始化属性
-	this->m_EmpNum = 0;
 
-	this->m_EmpArray = NULL;
+	//1.文件不存在
+	
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);  //读文件
+
+	if (!ifs.is_open())
+	{
+
+		cout << "文件不存在!!" << endl;
+
+		//初始化属性
+		//初始化记录人数
+		this->m_EmpNum = 0;
+
+		//初始化数据指针
+		this->m_EmpArray = NULL;
+
+		//初始化文件是否为空
+		this->m_FileIsEmpty = true;
+
+		//关闭文件
+		ifs.close();
+
+		return;
+	}
+
+	//2.文件存在,数据为空
+
+	char ch;
+	ifs>> ch;
+	if (ifs.eof())  //eof代表读取文件内容直接读取末尾的字符   
+		           // 假如直接读到末尾的字符就代表文件里的内容为空
+	{
+
+		//文件为空
+
+		cout << "文件为空" << endl;
+
+		//初始化属性
+		//初始化记录人数
+		this->m_EmpNum = 0;
+
+		//初始化数据指针
+		this->m_EmpArray = NULL;
+
+		//初始化文件是否为空
+		this->m_FileIsEmpty = true;
+
+		//关闭文件
+		ifs.close();
+
+		return;
+		
+	}
+
+	//3.文件存在,并且记录数据
+
+	int num = this->get_EmpNum();
+	cout << "职工人数为:  " << num << endl;
+
+	this->m_EmpNum = num;
+
+	//这里是测试代码
+	// 
+	//开辟 空间
+	this->m_EmpArray = new Worker * [this->m_EmpNum];
+
+	//将文件中的数据,存到数组中
+
+	this->intt_Emp();
+
+	for (int i = 0; i < this->m_EmpNum; i++)
+	{
+
+		cout << "职工编号:  " << this->m_EmpArray[i]->m_Id << "  "
+			<< "职工姓名:  " << this->m_EmpArray[i]->m_Nane << "  "
+			<< "部门编号 :  " << this->m_EmpArray[i]->m_DeptId << endl;
+	}
+
+
 
 
 }
@@ -126,6 +203,10 @@ void workerManager::Add_Emp()  //添加职工
 
 			//成功添加后,保存到文件中
 
+			this->save();
+
+			//更新文件内容不为空的标志
+			this->m_FileIsEmpty = false;
 
 			//提示添加成功
 
@@ -146,9 +227,99 @@ void workerManager::Add_Emp()  //添加职工
 }
 
 
+//保存文件
+void workerManager::save()
+{
+
+	ofstream ofs;
+	ofs.open(FILENAME, ios::out);  //用输出的方式打开文件  -- 写文件
+
+	//将每个人的数据写入到文件中
+	for (int i = 0; i < this->m_EmpNum; i++)
+	{
+
+		ofs << this->m_EmpArray[i]->m_Id << "  "
+			<< this->m_EmpArray[i]->m_Nane << "  "
+			<< this->m_EmpArray[i]->m_DeptId << endl;
+	}
+
+	ofs.close();
+
+}
+
+//统计文件中人数
+
+int workerManager::get_EmpNum()
+{
+
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);  //打开文件  读取内容
+
+	int id;
+	string name;
+	int dId;
+
+	int num = 0;
+	while (ifs>>id&&ifs>>name&&ifs>>dId)
+	{
+		//统计人数
+		num++;
+
+	}
+
+	return num;
+}
+
+//初始化员工
+
+void workerManager::intt_Emp()
+{
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+
+	int id;
+	string name;
+	int dId;
+
+	int index = 0;
+	while (ifs >> id && ifs >> name && ifs >> dId)
+	{
+		Worker* worker = NULL;
+
+		if (dId == 1)//普通职工
+		{
+
+			worker = new Employee(id, name, dId);
+
+		}
+		else if (dId == 2)//普通职工
+		{
+
+			worker = new Manager(id, name, dId);
+
+		}
+		else  //老板
+		{
+			worker = new Boss(id, name, dId);
+
+		}
+
+		this->m_EmpArray[index] = worker;
+		index++;
+		
+	}
+ 
+	ifs.close();  //关闭文件
+
+}
 
 
 workerManager::~workerManager()
 {
+	if (this->m_EmpArray != NULL)
+	{
+		delete[]this->m_EmpArray;
+		this->m_EmpArray = NULL;
 
+	}
 }

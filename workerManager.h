@@ -6,6 +6,8 @@ using namespace std;
 #include"manager.h"
 #include"boss.h"
 
+#include<fstream>
+#define FILENAME "empFile.txt"  //这里文件名是可以自定义的
 
 
 class workerManager
@@ -26,6 +28,22 @@ public:
 
 	//添加职工
 	void Add_Emp();
+
+	//保存文件
+	void save();
+
+	//判断文件是否为空  标志
+	
+	bool m_FileIsEmpty;
+
+	//统计文件中人数
+
+	int get_EmpNum();
+
+	//初始化员工
+	
+	void intt_Emp();
+
 
 	//退出系统
 	void ExitSystem();
