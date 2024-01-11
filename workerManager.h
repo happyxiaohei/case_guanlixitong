@@ -20,6 +20,9 @@ public:
 	//展示菜单
 	void Show_Menu();
 
+	//退出系统
+	void ExitSystem();
+
 	//记录职工人数
 	int m_EmpNum;
 
@@ -44,9 +47,15 @@ public:
 	
 	void intt_Emp();
 
+	//显示职工
+ 
+	void Show_Emp();
 
-	//退出系统
-	void ExitSystem();
+	//删除职工
+	void Del_Enp();
+
+	//判断职工是否存在,如果存在返回职工所在数组的位置,不存在返回-1
+	int IsExist(int id);
 
 	//析构函数
 	~workerManager();

@@ -16,7 +16,7 @@ workerManager::workerManager()
 	if (!ifs.is_open())
 	{
 
-		cout << "文件不存在!!" << endl;
+		//cout << "文件不存在!!" << endl;
 
 		//初始化属性
 		//初始化记录人数
@@ -44,7 +44,7 @@ workerManager::workerManager()
 
 		//文件为空
 
-		cout << "文件为空" << endl;
+		//cout << "文件为空" << endl;
 
 		//初始化属性
 		//初始化记录人数
@@ -66,26 +66,28 @@ workerManager::workerManager()
 	//3.文件存在,并且记录数据
 
 	int num = this->get_EmpNum();
-	cout << "职工人数为:  " << num << endl;
+	//cout << "职工人数为:  " << num << endl;
 
 	this->m_EmpNum = num;
 
-	//这里是测试代码
-	// 
+
 	//开辟 空间
 	this->m_EmpArray = new Worker * [this->m_EmpNum];
 
 	//将文件中的数据,存到数组中
 
 	this->intt_Emp();
+	
+	
+	//这里是测试代码
+	// 
+	//for (int i = 0; i < this->m_EmpNum; i++)
+	//{
 
-	for (int i = 0; i < this->m_EmpNum; i++)
-	{
-
-		cout << "职工编号:  " << this->m_EmpArray[i]->m_Id << "  "
-			<< "职工姓名:  " << this->m_EmpArray[i]->m_Nane << "  "
-			<< "部门编号 :  " << this->m_EmpArray[i]->m_DeptId << endl;
-	}
+	//	cout << "职工编号:  " << this->m_EmpArray[i]->m_Id << "  "
+	//		<< "职工姓名:  " << this->m_EmpArray[i]->m_Nane << "  "
+	//		<< "部门编号 :  " << this->m_EmpArray[i]->m_DeptId << endl;
+	//}
 
 
 
@@ -167,22 +169,33 @@ void workerManager::Add_Emp()  //添加职工
 			
 			cin >> dSelect;
 			
-			Worker* worker = NULL;
 			
+	
+			Worker* worker = NULL;
+
 			switch (dSelect)
 			{
 			case 1:
 				worker = new Employee(id, name, 1);
+				break;
 
 			case 2:
 				worker = new Manager(id, name, 2);
+				break;
 
 			case 3:
 				worker = new Boss(id, name, 3);
+				break;
+	
 
 			default:
 				break;
 			}
+			
+
+
+
+
 
 			//将创建职工指针,保存到数组中
 			newSpace[this->m_EmpNum + i] = worker;
@@ -311,6 +324,63 @@ void workerManager::intt_Emp()
  
 	ifs.close();  //关闭文件
 
+}
+
+//显示职工
+
+void workerManager::Show_Emp()
+{
+
+	//判断文件是否为空
+
+	if (this->m_FileIsEmpty)
+	{
+		cout << "文件不存在或者记录为空!" << endl;
+	}
+	else
+	{
+
+		for (int i = 0; i < m_EmpNum; i++)
+		{
+
+			//利用多态调用程序接口
+
+			this->m_EmpArray[i]->showInfo();
+
+
+		}
+	}
+	system("pause");
+	system("cls");
+
+
+}
+
+//删除职工
+void workerManager::Del_Enp()
+{
+
+
+}
+
+//判断职工是否存在,如果存在返回职工所在数组的位置,不存在返回-1
+int workerManager::IsExist(int id)
+{
+
+	int index = -1;
+
+	for (int i = 0;i<this->m_EmpNum;i++)
+	{
+		if (this->m_EmpArray[i]->m_Id == id)
+		{
+
+			index = i;
+
+			break;
+		}
+
+	}
+	return index;
 }
 
 
