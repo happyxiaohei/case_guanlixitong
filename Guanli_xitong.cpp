@@ -55,6 +55,7 @@ int main() {
 			wm.Show_Emp();
 			break;
 		case 3://删除职工
+			wm.Del_Enp();
 			break;
 		case 4://修改职工
 			break;
